@@ -14,7 +14,11 @@ import SearchBox from '@/components/SearchBox/SearchBox';
 
 import css from './NotesPage.module.css';
 
-export default function App() {
+interface NotesClientProps {
+  tag?: string;
+}
+
+export default function NotesClient({ tag }: NotesClientProps) {
   const [page, setPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -32,8 +36,8 @@ export default function App() {
   };
 
   const { data, isLoading, isError } = useQuery({
-    queryKey: ['notes', page, search],
-    queryFn: () => fetchNotes(page, search),
+    queryKey: ['notes', page, search, tag],
+    queryFn: () => fetchNotes(page, search, tag),
     placeholderData: keepPreviousData,
   });
 

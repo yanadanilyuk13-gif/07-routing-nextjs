@@ -20,12 +20,17 @@ interface NotesResponse {
 type CreateNoteData = Pick<Note, 'title' | 'content' | 'tag'>;
 
 // GET notes
-export async function fetchNotes(page: number, search: string): Promise<NotesResponse> {
+export async function fetchNotes(
+  page: number,
+  search: string,
+  tag?: string
+): Promise<NotesResponse> {
   const response = await api.get<NotesResponse>('/notes', {
     params: {
       page,
       search,
       perPage: 12,
+      ...(tag && tag !== 'all' ? { tag } : {}),
     },
   });
 
